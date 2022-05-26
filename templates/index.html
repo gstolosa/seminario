@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="box">
+  <b>Buscar:
+    <input id="search" type="text" placeholder="Introducir búsqueda">
+  </b>
+</div>
+<div class="row">
+  <div class="col-md-2">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-dismissible alert-success">
+      {{ message }}
+      <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="card border-success">
+    <div class="card-header">Agregar proveedor</div>
+    <div class="card card-body">
+      <form action="{{url_for('register')}}" method="POST" class="row g-2 needs-validation" novalidate>
+        <div class="form-group">
+          <input type="text" class="form-control" name="razon_social" placeholder="Razón Social" required>
+          <div class="invalid-feedback">Complete la razón social</div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name="nombre" placeholder="Nombre" required>
+          <div class="invalid-feedback">Complete el nombre</div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name="cuit" placeholder="CUIT" required>
+          <div class="invalid-feedback">Complete el CUIT</div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name="direccion" placeholder="Dirección" required>
+          <div class="invalid-feedback">Complete la dirección</div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name="ciudad" placeholder="Ciudad" required>
+          <div class="invalid-feedback">Complete la ciudad</div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name="telefono" placeholder="Teléfono" required>
+          <div class="invalid-feedback">Complete el teléfono</div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name="email" placeholder="E-mail" required>
+          <div class="invalid-feedback">Complete el E-mail</div>
+        </div>
+        <button class="btn btn-outline-success">
+          Aceptar
+        </button>
+      </form>
+    </div>
+  </div>
+  </div> 
+  <div class="col-md-10">
+    <table id="table" class="table table-striped table-hover table-bordered table-sm bg-light">
+      <thead>
+        <tr>
+          <td>Código</td>
+          <td>Razón social</td>
+          <td>Nombre</td>
+          <td>CUIT</td>
+          <td>Dirección</td>
+          <td>Ciudad</td>
+          <td>Teléfono</td>
+          <td>E-mail</td>
+          <td>Opción</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% for contact in contacts %}
+        <tr>
+          <td>{{contact.0}}</td>
+          <td>{{contact.1}}</td>
+          <td>{{contact.2}}</td>
+          <td>{{contact.3}}</td>
+          <td>{{contact.4}}</td>
+          <td>{{contact.5}}</td>
+          <td>{{contact.6}}</td>
+          <td>{{contact.7}}</td>
+          <td>
+            <a href="/edit/{{contact.0}}" class="btn btn-outline-warning">Modificar</a>
+            <a href="/delete/{{contact.0}}" class="btn btn-outline-danger btn-delete">Eliminar</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+{% endblock %}
